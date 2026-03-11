@@ -264,21 +264,21 @@
                                             <span className="text-pink-400">†</span> 학번
                                         </label>
                                         <input className="w-full p-5 rounded-[1.8rem] border-2 border-white bg-white/70 focus:bg-white focus:border-pink-300 outline-none font-bold text-xl transition-all shadow-sm text-slate-700" 
-                                               placeholder="예: 30521" value={studentId} onChange={e=>setStudentId(e.target.value)} required />
+                                               placeholder="예: 30421" value={studentId} onChange={e=>setStudentId(e.target.value)} required />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-sm font-bold text-slate-500 ml-4 flex items-center gap-2">
                                             <span className="text-pink-400">£</span> 성명
                                         </label>
                                         <input className="w-full p-5 rounded-[1.8rem] border-2 border-white bg-white/70 focus:bg-white focus:border-pink-300 outline-none font-bold text-xl transition-all shadow-sm text-slate-700" 
-                                               placeholder="성명을 입력하십시오" value={studentName} onChange={e=>setStudentName(e.target.value)} required />
+                                               placeholder="이름을 입력하세요." value={studentName} onChange={e=>setStudentName(e.target.value)} required />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-sm font-bold text-slate-500 ml-4 flex items-center gap-2">
                                             <span className="text-pink-400">¢</span> 사유 입력
                                         </label>
                                         <textarea className="w-full p-5 rounded-[1.8rem] border-2 border-white bg-white/70 focus:bg-white focus:border-pink-300 outline-none font-bold min-h-[130px] resize-none transition-all shadow-sm text-slate-700" 
-                                               placeholder="지각 조퇴 결석 시 사유를 입력하세요" value={reason} onChange={e=>setReason(e.target.value)} />
+                                               placeholder="지각 조퇴 결석 사유 입력! or 하고 싶은 말" value={reason} onChange={e=>setReason(e.target.value)} />
                                     </div>
                                     <button disabled={isLoading} className="bubble-btn w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-5 rounded-[2rem] shadow-xl text-xl mt-4 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50">
                                         {isLoading ? <i className="fa-solid fa-spinner animate-spin"></i> : <i className="fa-solid fa-signature"></i>}
