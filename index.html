@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="출결관리">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5663/5663119.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5663/5123119.png">
     <link rel="manifest" href="manifest.json">
 
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -18,20 +18,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
+        /* 1. 폰트 로딩 강제 설정 */
         @font-face {
             font-family: 'OngleipParkDahyeon';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
-            font-weight: normal; font-style: normal; font-display: swap;
+            font-weight: normal; 
+            font-style: normal;
+            font-display: block; /* 폰트 로드 전까지 텍스트 숨김 (기본 폰트 노출 방지) */
         }
-        * { font-family: 'OngleipParkDahyeon', sans-serif !important; letter-spacing: -0.02em !important; }
-        input, textarea, button, select, span, div, p, h1, h2, h3 { font-family: 'OngleipParkDahyeon', sans-serif !important; }
+
+        /* 2. 모든 요소 무조건 강제 적용 */
+        * { 
+            font-family: 'OngleipParkDahyeon', sans-serif !important; 
+            letter-spacing: -0.02em !important; 
+        }
+
+        /* 3. 브라우저가 고집 피우는 개별 요소들 정밀 타격 */
+        input, textarea, button, select, span, div, p, h1, h2, h3, b, strong, i {
+            font-family: 'OngleipParkDahyeon', sans-serif !important;
+        }
+
+        /* 4. 시간/숫자가 시스템 폰트로 나오는 현상 방지 */
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+            font-family: 'OngleipParkDahyeon', sans-serif !important;
+        }
+
         body {
             background-color: #fdf2f8;
             background-image: linear-gradient(#f9a8d415 1px, transparent 1px), linear-gradient(90deg, #f9a8d415 1px, transparent 1px);
             background-size: 20px 20px;
-            -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none; 
+            -webkit-user-select: none;
+            /* 모바일 텍스트 렌더링 최적화 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        input, textarea { user-select: auto !important; -webkit-user-select: auto !important; }
+
+        /* 입력창은 타이핑을 위해 유저 선택 허용 */
+        input, textarea { 
+            user-select: auto !important; 
+            -webkit-user-select: auto !important; 
+        }
+
+        /* 디자인 스타일링 */
         .soft-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-radius: 2.5rem; border: 2px solid white; box-shadow: 0 10px 25px -5px rgba(244, 114, 182, 0.1); }
         .bubble-btn { transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-bottom: 4px solid rgba(0,0,0,0.1); }
         .bubble-btn:active { transform: scale(0.96) translateY(2px); border-bottom-width: 1px; }
@@ -41,9 +72,12 @@
 </head>
 <body>
     <div id="root"></div>
+
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(reg => console.log('SW Registered'));
+            });
         }
     </script>
 
@@ -52,7 +86,7 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqkfbtpB_OBD8SrmkICxyeHTWoPXZ4cdpPe9AoyJQNQL7679SxGXh7xYCgu1laEsHA/exec";
 
         function App() {
-            // 수정된 로직: URL에 ID가 있으면 그걸 쓰고 저장, 없으면 저장된 걸 불러옴
+            // ID 기억 로직
             const [appId] = useState(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const idFromUrl = urlParams.get('id');
@@ -159,6 +193,7 @@
                             </div>
                         </div>
                     )}
+
                     <header className="px-8 pt-16 pb-6 text-center">
                         <div className="inline-block px-8 py-3 rounded-full bg-white shadow-sm border border-pink-100 mb-4">
                             <h1 className="text-2xl font-bold text-[#ff4d6d]">♤ {config.className || "출석 관리"} ♧</h1>
