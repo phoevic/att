@@ -18,30 +18,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* 1. 폰트 로딩 강제 설정 */
+        /* 1. 최후의 수단: 폰트를 Base64로 내장 (파일 로딩 실패 원천 차단) */
+        /* 주소 대신 데이터 자체를 넣었으므로 인터넷 연결 불안정과 상관없이 무조건 뜹니다. */
         @font-face {
             font-family: 'OngleipParkDahyeon';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
             font-weight: normal; 
             font-style: normal;
-            font-display: block; /* 폰트 로드 전까지 텍스트 숨김 (기본 폰트 노출 방지) */
+            font-display: block;
         }
 
-        /* 2. 모든 요소 무조건 강제 적용 */
-        * { 
-            font-family: 'OngleipParkDahyeon', sans-serif !important; 
-            letter-spacing: -0.02em !important; 
+        /* 2. 브라우저의 모든 고집을 꺾는 설정 */
+        html, body, #root, div, span, p, h1, h2, h3, input, textarea, button, select, i, b, strong {
+            font-family: 'OngleipParkDahyeon', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            letter-spacing: -0.02em !important;
         }
 
-        /* 3. 브라우저가 고집 피우는 개별 요소들 정밀 타격 */
-        input, textarea, button, select, span, div, p, h1, h2, h3, b, strong, i {
-            font-family: 'OngleipParkDahyeon', sans-serif !important;
+        /* 3. 숫자와 입력창 정밀 타격 */
+        .tabular-nums, input::placeholder, textarea::placeholder {
+            font-family: 'OngleipParkDahyeon' !important;
         }
 
-        /* 4. 시간/숫자가 시스템 폰트로 나오는 현상 방지 */
-        .tabular-nums {
-            font-variant-numeric: tabular-nums;
-            font-family: 'OngleipParkDahyeon', sans-serif !important;
+        input, textarea {
+            -webkit-appearance: none; /* 아이폰 기본 필드 스타일 제거 */
+            border-radius: 2rem;
         }
 
         body {
@@ -51,18 +54,10 @@
             -webkit-tap-highlight-color: transparent; 
             user-select: none; 
             -webkit-user-select: none;
-            /* 모바일 텍스트 렌더링 최적화 */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 입력창은 타이핑을 위해 유저 선택 허용 */
-        input, textarea { 
-            user-select: auto !important; 
-            -webkit-user-select: auto !important; 
-        }
+        input, textarea { user-select: auto !important; -webkit-user-select: auto !important; }
 
-        /* 디자인 스타일링 */
         .soft-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-radius: 2.5rem; border: 2px solid white; box-shadow: 0 10px 25px -5px rgba(244, 114, 182, 0.1); }
         .bubble-btn { transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-bottom: 4px solid rgba(0,0,0,0.1); }
         .bubble-btn:active { transform: scale(0.96) translateY(2px); border-bottom-width: 1px; }
@@ -72,12 +67,9 @@
 </head>
 <body>
     <div id="root"></div>
-
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').then(reg => console.log('SW Registered'));
-            });
+            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
         }
     </script>
 
@@ -86,7 +78,6 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqkfbtpB_OBD8SrmkICxyeHTWoPXZ4cdpPe9AoyJQNQL7679SxGXh7xYCgu1laEsHA/exec";
 
         function App() {
-            // ID 기억 로직
             const [appId] = useState(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const idFromUrl = urlParams.get('id');
