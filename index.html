@@ -2,27 +2,14 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>출석 관리 시스템🍀</title>
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="출결관리">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5663/5663119.png">
-    
-    <link rel="manifest" href='data:application/manifest+json,{"name":"출석관리시스템","short_name":"출결앱","start_url":".","display":"standalone","background_color":"#fdf2f8","theme_color":"#ff4d6d","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/5663/5663119.png","sizes":"512x512","type":"image/png"}]}'>
-
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <style>
-        /* 모바일에서 꾹 눌렀을 때 텍스트 선택 방지 (앱 느낌) */
-        body { -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
-        input, textarea { user-select: auto !important; -webkit-user-select: auto !important; }
-        
         @font-face {
             font-family: 'OngleipParkDahyeon';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
@@ -35,7 +22,6 @@
             background-image: linear-gradient(#f9a8d415 1px, transparent 1px), linear-gradient(90deg, #f9a8d415 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        /* ... 기존 스타일 그대로 유지 ... */
         .soft-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-radius: 2.5rem; border: 2px solid white; box-shadow: 0 10px 25px -5px rgba(244, 114, 182, 0.1); }
         .bubble-btn { transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-bottom: 4px solid rgba(0,0,0,0.1); }
         .bubble-btn:active { transform: scale(0.96) translateY(2px); border-bottom-width: 1px; }
@@ -45,20 +31,6 @@
 </head>
 <body>
     <div id="root"></div>
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const blob = new Blob([`
-                    self.addEventListener('fetch', (e) => { e.respondWith(fetch(e.request)); });
-                `], { type: 'text/javascript' });
-                const url = URL.createObjectURL(blob);
-                navigator.serviceWorker.register(url);
-            });
-        }
-    </script>
-
-    <script type="text/babel">
     <script type="text/babel">
         const { useState, useEffect } = React;
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqkfbtpB_OBD8SrmkICxyeHTWoPXZ4cdpPe9AoyJQNQL7679SxGXh7xYCgu1laEsHA/exec";
